@@ -19,6 +19,7 @@
 
 var numeriComputer = [];
 var min = 1;
+var max = 100
 var numeroBombe = 16
 var numeriUtente = []
 
@@ -27,35 +28,25 @@ var difficoltà = prompt("Scegli una difficoltà tra facile, normale, difficile"
 switch (difficoltà) {
   case "facile":
     var max = 100;
-    numeriComputer = createArray(numeriComputer, min, max, numeroBombe);
-    console.log(numeriComputer);
-    punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe);
-    console.log("Hai totalizzato " + punteggio + " punti");
     break;
   case "normale":
     var max = 80;
-    numeriComputer = createArray(numeriComputer, min, max, numeroBombe);
-    console.log(numeriComputer);
-    punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe);
-    console.log("Hai totalizzato " + punteggio + " punti");
     break;
   case "difficile":
     var max = 50;
-    numeriComputer = createArray(numeriComputer, min, max, numeroBombe);
-    console.log(numeriComputer);
-    punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe);
-    console.log("Hai totalizzato " + punteggio + " punti");
     break;
-
+  default:
+  console.log("Non hai inserito la difficoltà richiesta");
+  break;
 }
 
+numeriComputer = createArray(numeriComputer, min, max, numeroBombe);
 
+console.log(numeriComputer.sort(compareNumbers));
 
+punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe);
 
-
-
-
-
+console.log("Hai totalizzato " + punteggio + " punti");
 
 
   // UTILITY FUNCTIONS
@@ -104,4 +95,8 @@ function randomNumberInRange(min, max) {
   } else {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+}
+
+function compareNumbers(a, b) {
+  return a - b;
 }
