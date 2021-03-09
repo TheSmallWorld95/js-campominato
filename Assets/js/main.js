@@ -19,29 +19,59 @@
 
 var numeriComputer = [];
 var min = 1;
-var max = 100;
-var numeriGenerati = 16
+var numeroBombe = 16
 var numeriUtente = []
 
+var difficoltà = prompt("Scegli una difficoltà tra facile, normale, difficile").toLowerCase();
+
+switch (difficoltà) {
+  case "facile":
+    var max = 100;
+    numeriComputer = createArray(numeriComputer, min, max, numeroBombe);
+    console.log(numeriComputer);
+    punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe);
+    console.log("Hai totalizzato " + punteggio + " punti");
+    break;
+  case "normale":
+    var max = 80;
+    numeriComputer = createArray(numeriComputer, min, max, numeroBombe);
+    console.log(numeriComputer);
+    punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe);
+    console.log("Hai totalizzato " + punteggio + " punti");
+    break;
+  case "difficile":
+    var max = 50;
+    numeriComputer = createArray(numeriComputer, min, max, numeroBombe);
+    console.log(numeriComputer);
+    punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe);
+    console.log("Hai totalizzato " + punteggio + " punti");
+    break;
+
+}
 
 
 
-numeriComputer = createArray(numeriComputer, min, max, numeriGenerati);
 
-console.log(numeriComputer);
 
-punteggio = campoMinato(numeriComputer, numeriUtente, min, max, numeriGenerati);
 
-console.log("Hai totalizzato " + punteggio + " punti");
+
+
+
+
+  // UTILITY FUNCTIONS
 
 // Creo un array che conterrà i numeri dell'utente
-
-function campoMinato(numeriComputer, numeriUtente, min, max, numeriGenerati) {
- while (numeriUtente.length < max - numeriGenerati) {
+function campoMinato(numeriComputer, numeriUtente, min, max, numeroBombe) {
+ while (numeriUtente.length < max - numeroBombe) {
+   // Chiedo all'utente di inserire un numero che sia compreso tra min e max
+   // Il numero non deve essere ripetuto 2 volte (!numeriUtente.includes(numeroUtente))
    var numeroUtente = parseInt(prompt("Inserisci un numero"));
    if (!isNaN(numeroUtente) && min <= numeroUtente && numeroUtente <= max && !numeriUtente.includes(numeroUtente) ) {
+     // Il numero inserito dall'utente se fa parte delle bombe termina il gioco
      if (!numeriComputer.includes(numeroUtente)) {
        numeriUtente.push(numeroUtente)
+       // Altrimenti se non fa parte delle bombe verrà pushato nell'array
+       // contenente i numeri dell'utente
      } else {
        return numeriUtente.length
      }
@@ -50,28 +80,28 @@ function campoMinato(numeriComputer, numeriUtente, min, max, numeriGenerati) {
    }
 
  }
+ // Una volta finito il ciclo while l'utente saprà il suo punteggio dato
+ // dalla lunghezza dell'array contenente i numeri da lui generati
  return numeriUtente.length
 }
 
 
-
-  // UTILITY FUNCTIONS
-  function randomNumberInRange(min, max) {
-    if (isNaN(min) || isNaN(max)) {
-      console.log("Non sono numeri");
-    } else {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+function createArray(array, min, max, numeroBombe) {
+  // Con un ciclo while creo 16 numeri randomici
+  while (array.length < numeroBombe) {
+    var numeroComputer = randomNumberInRange(min, max)
+  // Con includes pusho nel mio array solo numeri diversi tra loro
+    if (!numeriComputer.includes(numeroComputer)) {
+      numeriComputer.push(numeroComputer)
     }
   }
+  return numeriComputer;
+}
 
-  function createArray(array, min, max, numeriGenerati) {
-    // Con un ciclo while creo 16 numeri randomici
-    while (array.length < numeriGenerati) {
-      var numeroComputer = randomNumberInRange(min, max)
-    // Con includes pusho nel mio array solo numeri diversi tra loro
-      if (!numeriComputer.includes(numeroComputer)) {
-        numeriComputer.push(numeroComputer)
-      }
-    }
-    return numeriComputer;
+function randomNumberInRange(min, max) {
+  if (isNaN(min) || isNaN(max)) {
+    console.log("Non sono numeri");
+  } else {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+}
